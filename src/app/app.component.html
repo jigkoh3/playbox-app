@@ -1,0 +1,83 @@
+<!-- Toolbar -->
+<div class="toolbar" role="banner">
+
+    <img width="60" alt="Angular Logo" src="https://www.ais.th/play/images/support/logo_playbox.png" />
+    <h3>Playbox Management Diagnostic System</h3>
+    <div class="spacer"></div>
+    <div class="" fxFlex="0 1 auto" style="margin-right: 10px;" fxLayout="row" fxLayoutAlign="start center">
+        <button mat-icon-button>
+            <div class="user-button" [matMenuTriggerFor]="userMenu" fxFlex fxLayout="row" fxLayoutAlign="center center">
+                JW
+            </div>
+        </button>
+
+        <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
+            <button mat-menu-item (click)="changePassword()">
+                <mat-icon>password</mat-icon>
+                <span>Chang Password</span>
+            </button>
+            <mat-divider></mat-divider>
+            <button mat-menu-item (click)="logout()">
+                <mat-icon>exit_to_app</mat-icon>
+                <span>Logout</span>
+            </button>
+        </mat-menu>
+
+    </div>
+</div>
+
+
+<mat-sidenav-container class="container">
+    <mat-sidenav class="sidenav" mode="side" opened fxHide.lt-sm>
+        <mat-selection-list [multiple]="false">
+            <mat-list-option [routerLink]="['/dashboard']">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <mat-icon>space_dashboard</mat-icon>
+                    <span style="padding: 5px;" fxHide.lt-lg *ngIf="!hideDescript">Dashboard</span>
+                </div>
+            </mat-list-option>
+            <mat-list-option [routerLink]="['/ticket']">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <mat-icon>construction</mat-icon>
+                    <span style="padding: 5px;" fxHide.lt-lg *ngIf="!hideDescript">Troubleshoot Ticket</span>
+                </div>
+            </mat-list-option>
+            <mat-list-option [routerLink]="['/playbox']">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <mat-icon>connected_tv</mat-icon>
+                    <span style="padding: 5px;" fxHide.lt-lg *ngIf="!hideDescript">Playbox Info</span>
+                </div>
+            </mat-list-option>
+
+
+
+
+            <!-- <div fxLayoutAlign="end center" fxHide.lt-lg *ngIf="!hideDescript" >
+                <button mat-icon-button (click)="hideDescript=!hideDescript" [ngClass]='appropriateClass'>
+                    <mat-icon class="mat-18">keyboard_double_arrow_left</mat-icon>
+                </button>
+            </div>
+            <div fxLayoutAlign="center center" fxHide.lt-lg *ngIf="hideDescript" >
+                <button mat-icon-button (click)="hideDescript=!hideDescript" [ngClass]='appropriateClass'>
+                    <mat-icon class="mat-18">keyboard_double_arrow_right</mat-icon>
+                </button>
+            </div> -->
+            <div [ngClass]='appropriateClass'>
+              
+                <mat-list-option [routerLink]="['/settings']">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <mat-icon>settings</mat-icon>
+                        <span style="padding: 5px;" fxHide.lt-lg *ngIf="!hideDescript">Settings</span>
+                    </div>
+                </mat-list-option>
+                
+                
+            </div>
+
+        </mat-selection-list>
+    </mat-sidenav>
+    <!-- style="height: 900px; background-color: coral;" -->
+    <div [style.height]="screenHeight" class="main">
+        <router-outlet></router-outlet>
+    </div>
+</mat-sidenav-container>

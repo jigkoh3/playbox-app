@@ -1,0 +1,33 @@
+<div fxLayout.gt-xs="row" fxLayout.lt-sm="column">
+    <div fxFlex.gt-sm="70" fxFlex="50" fxHide.lt-sm></div>
+    <div fxFlex.gt-sm="30" fxFlex="50" style="padding-left: 10px; padding-right: 10px;">
+        <h1>ลงชื่อเข้าใช้งาน</h1>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()"  fxLayout.gt-xs="column">
+            <mat-form-field  appearance="outline" fxFlexFill>
+                <mat-label>อีเมลล์</mat-label>
+                <input matInput name="email" formControlName="email" required>
+                <mat-error *ngIf="form.hasError('required', 'email')">
+                    กรุณาระบุ อีเมลล์
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field  appearance="outline" fxFlexFill>
+                <mat-label>รหัสผ่าน</mat-label>
+                <input matInput type="password" name="password" formControlName="password" required>
+                <mat-error *ngIf="form.hasError('required', 'password')">
+                    กรุณาระบุ รหัสผ่าน
+                </mat-error>
+
+            </mat-form-field>
+            <div>
+                &nbsp;&nbsp;
+            </div>
+
+            <div fxLayoutAlign="center end">
+                <button fxFlex="80" mat-raised-button color="primary" type="submit"
+                    [disabled]="!form?.valid">เข้าสู่ระบบ</button>
+            </div>
+
+        </form>
+        
+    </div>
+</div>

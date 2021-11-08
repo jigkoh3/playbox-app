@@ -1,0 +1,48 @@
+<mat-drawer-container>
+    <mat-drawer-content fxLayout="column">
+        <mat-toolbar>
+            <span fxFlex="90">Role Configuration</span>
+
+            <button mat-raised-button color="primary" fxLayoutAlign="center center" (click)="formDrawer.toggle()"
+                *ngIf="!formDrawer.opened">
+                <mat-icon>add</mat-icon>
+                <span>Add new role</span>
+            </button>
+        </mat-toolbar>
+        <div [style.height]="screenHeight">
+            table data
+        </div>
+
+    </mat-drawer-content>
+    <mat-drawer #formDrawer class="form-drawer" mode="side" position="end">
+        <mat-toolbar>
+            <span fxFlex="90">Role Management</span>
+            <button mat-icon-button fxLayoutAlign="end center" (click)="formDrawer.toggle()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-toolbar>
+        <div fxLayout="column" [style.height]="screenHeight">
+            <div fxFlex="90" class="form-content"  fxLayoutAlign="center start">
+                <form [formGroup]="bodyForm" fxLayout="column" fxFlex="100">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Role Code</mat-label>
+                        <input matInput formControlName="roleCode" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Role Name</mat-label>
+                        <input matInput formControlName="roleName" required>
+                    </mat-form-field>
+                    
+                    <mat-slide-toggle color="primary" formControlName="isActive">Active</mat-slide-toggle>
+                   
+                </form>
+            </div>
+            <div fxFlex="10" fxLayoutAlign="center center">
+                <button mat-raised-button fxFlex="90" color="primary" fxLayoutAlign="center center"
+                    (click)="formDrawer.toggle()" [disabled]="bodyForm.invalid">
+                    <span>Done</span>
+                </button>
+            </div>
+        </div>
+    </mat-drawer>
+</mat-drawer-container>
