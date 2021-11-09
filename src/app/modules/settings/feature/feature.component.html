@@ -1,34 +1,85 @@
 <mat-drawer-container>
-    <mat-drawer-content fxLayout="column">
-        <mat-toolbar>
-            <span fxFlex="90">Feature Configuration</span>
+  <mat-drawer-content fxLayout="column">
+    <mat-toolbar>
+      <span fxFlex="90">Feature Configuration</span>
 
-            <button mat-raised-button color="primary" fxLayoutAlign="center center" (click)="formDrawer.toggle()"
-                *ngIf="!formDrawer.opened">
-                <mat-icon>add</mat-icon>
-                <span>Add new feature</span>
-            </button>
-        </mat-toolbar>
-        <div [style.height]="screenHeight">
-            table data
-        </div>
+      <button mat-raised-button color="primary" fxLayoutAlign="center center" (click)="addNew()"
+        *ngIf="!formDrawer.opened">
+        <mat-icon>add</mat-icon>
+        <span>Add new feature</span>
+      </button>
+    </mat-toolbar>
+    <div [style.height]="screenHeight">
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
 
-    </mat-drawer-content>
-    <mat-drawer #formDrawer class="form-drawer" mode="side" position="end">
-        <mat-toolbar>
-            <span fxFlex="90">Feature Management</span>
-            <button mat-icon-button fxLayoutAlign="end center" (click)="formDrawer.toggle()">
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-toolbar>
-        <div fxLayout="column" [style.height]="screenHeight">
-            <div fxFlex="90">body</div>
-            <div fxFlex="10" fxLayoutAlign="center center">
-                <button mat-raised-button fxFlex="90" color="primary" fxLayoutAlign="center center"
-                    (click)="formDrawer.toggle()">
-                    <span>Done</span>
-                </button>
-            </div>
-        </div>
-    </mat-drawer>
+          <ng-container matColumnDef="FeatureID">
+            <th mat-header-cell *matHeaderCellDef> Feature ID. </th>
+            <td mat-cell *matCellDef="let element"> {{element.FeatureID}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="FeatureName">
+            <th mat-header-cell *matHeaderCellDef> Feature Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.FeatureName}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="FeatureCode">
+            <th mat-header-cell *matHeaderCellDef> Feature Code </th>
+            <td mat-cell *matCellDef="let element"> {{element.FeatureCode}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="FeatureDescription">
+            <th mat-header-cell *matHeaderCellDef> Feature Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.FeatureDescription}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+          aria-label="Select page of periodic elements">
+        </mat-paginator>
+      </div>
+    </div>
+
+  </mat-drawer-content>
+  <mat-drawer #formDrawer class="form-drawer" mode="side" position="end">
+    <mat-toolbar>
+      <span fxFlex="90">Feature Management</span>
+      <button mat-icon-button fxLayoutAlign="end center" (click)="formDrawer.toggle()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
+    <div fxLayout="column" [style.height]="screenHeight">
+      <div fxFlex="90" class="form-content" fxLayoutAlign="center start">
+        <form [formGroup]="bodyForm" fxLayout="column" fxFlex="100">
+          <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Feature Code</mat-label>
+            <input matInput formControlName="featureCode" autocomplete="off" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Feature Name</mat-label>
+            <input matInput formControlName="featureName" autocomplete="off" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Feature Description</mat-label>
+            <textarea matInput formControlName="featureDescription" autocomplete="off" required></textarea>
+          </mat-form-field>
+          <mat-slide-toggle color="primary" formControlName="isActive">Active</mat-slide-toggle>
+        </form>
+      </div>
+      <div fxFlex="10" fxLayoutAlign="center center">
+        <button mat-raised-button fxFlex="90" color="primary" fxLayoutAlign="center center" (click)="onSubmit()"
+          [disabled]="bodyForm.invalid">
+          <span>บันทึก</span>
+        </button>
+      </div>
+    </div>
+  </mat-drawer>
 </mat-drawer-container>

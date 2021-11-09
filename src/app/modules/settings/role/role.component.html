@@ -1,48 +1,86 @@
 <mat-drawer-container>
-    <mat-drawer-content fxLayout="column">
-        <mat-toolbar>
-            <span fxFlex="90">Role Configuration</span>
+  <mat-drawer-content fxLayout="column">
+    <mat-toolbar>
+      <span fxFlex="90">Role Configuration</span>
 
-            <button mat-raised-button color="primary" fxLayoutAlign="center center" (click)="formDrawer.toggle()"
-                *ngIf="!formDrawer.opened">
-                <mat-icon>add</mat-icon>
-                <span>Add new role</span>
-            </button>
-        </mat-toolbar>
-        <div [style.height]="screenHeight">
-            table data
-        </div>
+      <button mat-raised-button color="primary" fxLayoutAlign="center center" (click)="addNew()"
+        *ngIf="!formDrawer.opened">
+        <mat-icon>add</mat-icon>
+        <span>Add new role</span>
+      </button>
+    </mat-toolbar>
+    <div [style.height]="screenHeight">
 
-    </mat-drawer-content>
-    <mat-drawer #formDrawer class="form-drawer" mode="side" position="end">
-        <mat-toolbar>
-            <span fxFlex="90">Role Management</span>
-            <button mat-icon-button fxLayoutAlign="end center" (click)="formDrawer.toggle()">
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-toolbar>
-        <div fxLayout="column" [style.height]="screenHeight">
-            <div fxFlex="90" class="form-content"  fxLayoutAlign="center start">
-                <form [formGroup]="bodyForm" fxLayout="column" fxFlex="100">
-                    <mat-form-field appearance="outline" fxFlex="100">
-                        <mat-label>Role Code</mat-label>
-                        <input matInput formControlName="roleCode" required>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" fxFlex="100">
-                        <mat-label>Role Name</mat-label>
-                        <input matInput formControlName="roleName" required>
-                    </mat-form-field>
-                    
-                    <mat-slide-toggle color="primary" formControlName="isActive">Active</mat-slide-toggle>
-                   
-                </form>
-            </div>
-            <div fxFlex="10" fxLayoutAlign="center center">
-                <button mat-raised-button fxFlex="90" color="primary" fxLayoutAlign="center center"
-                    (click)="formDrawer.toggle()" [disabled]="bodyForm.invalid">
-                    <span>Done</span>
-                </button>
-            </div>
-        </div>
-    </mat-drawer>
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
+
+          <ng-container matColumnDef="RoleID">
+            <th mat-header-cell *matHeaderCellDef> Role ID. </th>
+            <td mat-cell *matCellDef="let element"> {{element.RoleID}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="RoleName">
+            <th mat-header-cell *matHeaderCellDef> Role Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.RoleName}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="RoleCode">
+            <th mat-header-cell *matHeaderCellDef> Role Code </th>
+            <td mat-cell *matCellDef="let element"> {{element.RoleCode}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="RoleDescription">
+            <th mat-header-cell *matHeaderCellDef> Role Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.RoleDescription}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+          aria-label="Select page of periodic elements">
+        </mat-paginator>
+      </div>
+    </div>
+  </mat-drawer-content>
+  <mat-drawer #formDrawer class="form-drawer" mode="side" position="end">
+    <mat-toolbar>
+      <span fxFlex="90">Role Management</span>
+      <button mat-icon-button fxLayoutAlign="end center" (click)="formDrawer.toggle()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
+    <div fxLayout="column" [style.height]="screenHeight">
+      <div fxFlex="90" class="form-content" fxLayoutAlign="center start">
+        <form [formGroup]="bodyForm" fxLayout="column" fxFlex="100">
+          <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Role Code</mat-label>
+            <input matInput formControlName="roleCode" autocomplete="off" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Role Name</mat-label>
+            <input matInput formControlName="roleName" autocomplete="off" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Role Description</mat-label>
+            <textarea matInput formControlName="roleDescription" autocomplete="off" required></textarea>
+          </mat-form-field>
+          <mat-slide-toggle color="primary" formControlName="isActive">Active</mat-slide-toggle>
+        </form>
+      </div>
+
+      <div fxFlex="10" fxLayoutAlign="center center">
+        <button mat-raised-button fxFlex="90" color="primary" fxLayoutAlign="center center" (click)="onSubmit()"
+          [disabled]="bodyForm.invalid">
+          <span>บันทึก</span>
+        </button>
+      </div>
+    </div>
+  </mat-drawer>
 </mat-drawer-container>

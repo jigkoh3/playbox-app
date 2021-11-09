@@ -1,34 +1,94 @@
 <mat-drawer-container>
-    <mat-drawer-content fxLayout="column">
-        <mat-toolbar>
-            <span fxFlex="90">Application Menu Configuration</span>
+  <mat-drawer-content fxLayout="column">
+    <mat-toolbar>
+      <span fxFlex="90">Application Menu Configuration</span>
 
-            <button mat-raised-button color="primary" fxLayoutAlign="center center" (click)="formDrawer.toggle()"
-                *ngIf="!formDrawer.opened">
-                <mat-icon>add</mat-icon>
-                <span>Add new menu</span>
-            </button>
-        </mat-toolbar>
-        <div [style.height]="screenHeight">
-            table data
-        </div>
+      <button mat-raised-button color="primary" fxLayoutAlign="center center" (click)="addNew()"
+        *ngIf="!formDrawer.opened">
+        <mat-icon>add</mat-icon>
+        <span>Add new menu</span>
+      </button>
+    </mat-toolbar>
+    <div [style.height]="screenHeight">
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
 
-    </mat-drawer-content>
-    <mat-drawer #formDrawer class="form-drawer" mode="side" position="end">
-        <mat-toolbar>
-            <span fxFlex="90">Application Menu Management</span>
-            <button mat-icon-button fxLayoutAlign="end center" (click)="formDrawer.toggle()">
-                <mat-icon>close</mat-icon>
-            </button>
-        </mat-toolbar>
-        <div fxLayout="column" [style.height]="screenHeight">
-            <div fxFlex="90">body</div>
-            <div fxFlex="10" fxLayoutAlign="center center">
-                <button mat-raised-button fxFlex="90" color="primary" fxLayoutAlign="center center"
-                    (click)="formDrawer.toggle()">
-                    <span>Done</span>
-                </button>
-            </div>
-        </div>
-    </mat-drawer>
+          <ng-container matColumnDef="MenuID">
+            <th mat-header-cell *matHeaderCellDef> Menu ID. </th>
+            <td mat-cell *matCellDef="let element"> {{element.MenuID}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="MenuCode">
+            <th mat-header-cell *matHeaderCellDef> Menu Code </th>
+            <td mat-cell *matCellDef="let element"> {{element.MenuCode}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="MenuName">
+            <th mat-header-cell *matHeaderCellDef> Menu Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.MenuName}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="MenuURL">
+            <th mat-header-cell *matHeaderCellDef> Menu URL </th>
+            <td mat-cell *matCellDef="let element"> {{element.MenuURL}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="MenuDescription">
+            <th mat-header-cell *matHeaderCellDef> Menu Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.MenuDescription}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+          aria-label="Select page of periodic elements">
+        </mat-paginator>
+      </div>
+    </div>
+
+  </mat-drawer-content>
+  <mat-drawer #formDrawer class="form-drawer" mode="side" position="end">
+    <mat-toolbar>
+      <span fxFlex="90">Application Menu Management</span>
+      <button mat-icon-button fxLayoutAlign="end center" (click)="formDrawer.toggle()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
+    <div fxLayout="column" [style.height]="screenHeight">
+      <div fxFlex="90" class="form-content" fxLayoutAlign="center start">
+        <form [formGroup]="bodyForm" fxLayout="column" fxFlex="100">
+          <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Menu Code</mat-label>
+            <input matInput formControlName="menuCode" autocomplete="off" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Menu Name</mat-label>
+            <input matInput formControlName="menuName" autocomplete="off" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Menu URL</mat-label>
+            <input matInput formControlName="menuURL" autocomplete="off" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline" fxFlex="100">
+            <mat-label>Menu Description</mat-label>
+            <textarea matInput formControlName="menuDescription" autocomplete="off" required></textarea>
+          </mat-form-field>
+          <mat-slide-toggle color="primary" formControlName="isActive">Active</mat-slide-toggle>
+        </form>
+      </div>
+      <div fxFlex="10" fxLayoutAlign="center center">
+        <button mat-raised-button fxFlex="90" color="primary" fxLayoutAlign="center center" (click)="onSubmit()"
+          [disabled]="bodyForm.invalid">
+          <span>บันทึก</span>
+        </button>
+      </div>
+    </div>
+  </mat-drawer>
 </mat-drawer-container>
