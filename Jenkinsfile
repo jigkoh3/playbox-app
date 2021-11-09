@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Jigkoh Test 3 Deploying....'
+                echo 'Deploying....'
             }
         }
     }
