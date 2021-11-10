@@ -7,6 +7,8 @@ import { RoleComponent } from './role/role.component';
 import { AppMenuComponent } from './app-menu/app-menu.component';
 import { FeatureComponent } from './feature/feature.component';
 import { PermissionComponent } from './permission/permission.component';
+import { ListRoleComponent } from './permission/list-role/list-role.component';
+import { TableMenuComponent } from './permission/table-menu/table-menu.component';
 
 const routes: Routes = [
   {
@@ -21,7 +23,9 @@ const routes: Routes = [
     RoleComponent,
     AppMenuComponent,
     FeatureComponent,
-    PermissionComponent
+    PermissionComponent,
+    ListRoleComponent,
+    TableMenuComponent
   ],
   imports: [
     CommonModule,

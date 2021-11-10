@@ -3,34 +3,19 @@
     <mat-toolbar>
       <span fxFlex="90">Permission Configuration</span>
 
-      <button mat-raised-button color="primary" fxLayoutAlign="center center" (click)="formDrawer.toggle()"
+      <button mat-raised-button color="primary" fxLayoutAlign="center center" (click)="addNew()"
         *ngIf="!formDrawer.opened">
         <mat-icon>add</mat-icon>
         <span>Add new permission</span>
       </button>
     </mat-toolbar>
     <div [style.height]="screenHeight">
-      <div fxFlex="20">
-        <mat-list>
-          <mat-list-item> Administrator </mat-list-item>
-          <mat-list-item> NOC </mat-list-item>
-          <mat-list-item> Support </mat-list-item>
-        </mat-list>
-
-
-        <!-- <mat-nav-list>
-              <mat-list-item *ngFor="let link of links">
-                 <a matLine href="...">{{ link }}</a>
-                 <button mat-icon-button (click)="showInfo(link)">
-                    <mat-icon>info</mat-icon>
-                 </button>
-              </mat-list-item>
-            </mat-nav-list> -->
+      <div fxFlex="100" class="borderline">
+        <app-list-role></app-list-role>
       </div>
-
-      <div fxFlex="80" color='primary'>
-
-      </div>
+      <!-- <div fxFlex="80">
+        <app-table-menu></app-table-menu>
+      </div> -->
     </div>
 
   </mat-drawer-content>
@@ -42,11 +27,39 @@
       </button>
     </mat-toolbar>
     <div fxLayout="column" [style.height]="screenHeight">
-      <div fxFlex="90">body</div>
+      <div fxFlex="90" fxLayoutAlign="space-between start">
+        <div fxLayout="column" [formGroup]="bodyForm">
+          <div fxFlex="10" >
+            <mat-form-field appearance="fill">
+              <mat-label>Select Application Menu</mat-label>
+              <mat-select formControlName="menuName">
+                <mat-option *ngFor="let menu of Appmenu" [value]="menu.menuCode">
+                  {{menu.menuName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxFlex="90" >
+            <section class="example-section">
+              <span class="example-list-section">
+                <mat-label>Select Feature</mat-label>
+                <ul>
+                  <li *ngFor="let feature of Feature">
+                    <mat-checkbox formControlName="featureName">
+                      {{feature.featureName}}
+                    </mat-checkbox>
+                  </li>
+                </ul>
+              </span>
+            </section>
+          </div>
+        </div>
+
+      </div>
       <div fxFlex="10" fxLayoutAlign="center center">
-        <button mat-raised-button fxFlex="90" color="primary" fxLayoutAlign="center center"
-          (click)="formDrawer.toggle()">
-          <span>Done</span>
+        <button mat-raised-button fxFlex="90" color="primary" fxLayoutAlign="center center" (click)="onSubmit()"
+          [disabled]="bodyForm.invalid">
+          <span>บันทึก</span>
         </button>
       </div>
     </div>
