@@ -1,11 +1,10 @@
 export interface FeatureModel {
-  featureID: number;
-  featureCode: string;
-  featureName: string;
-  featureDescription: string;
+  feature_code: string;
+  feature_name: string;
+  feature_description: string;
   status: string;
-  createBy: string;
-  createDate: number;
-  updateBy: string;
-  updateDate: number;
+  create_by: string;
+  create_date: number;
+  update_by: string;
+  update_date: number;
 }

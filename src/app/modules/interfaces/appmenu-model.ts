@@ -1,12 +1,13 @@
 export interface AppmenuModel {
-  menuID: number;
-  menuCode: string;
-  menuName: string;
-  menuURL: string;
-  menuDescription: string;
+  menu_code: string;
+  menu_name: string;
+  menu_description: string;
+  sequence: number;
+  action_url:string;
+  icon:string;
   status: string;
-  createBy: string;
-  createDate: number;
-  updateBy: string;
-  updateDate: number;
+  create_by: string;
+  create_date: number;
+  update_by: string;
+  update_date: number;
 }
